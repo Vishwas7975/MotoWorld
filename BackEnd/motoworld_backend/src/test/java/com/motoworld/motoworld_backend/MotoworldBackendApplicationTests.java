@@ -1,10 +1,10 @@
-package com.MotoWorld.usercrud_backend;
+package com.motoworld.motoworld_backend;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class UsercrudBackendApplicationTests {
+class MotoworldBackendApplicationTests {
 
 	@Test
 	void contextLoads() {

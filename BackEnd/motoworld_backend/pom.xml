@@ -8,10 +8,10 @@
 		<version>3.5.7</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.MotoWorld</groupId>
-	<artifactId>usercrud_backend</artifactId>
+	<groupId>com.motoworld</groupId>
+	<artifactId>motoworld_backend</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>usercrud_backend</name>
+	<name>motoworld_backend</name>
 	<description>Demo project for Spring Boot</description>
 	<url/>
 	<licenses>
