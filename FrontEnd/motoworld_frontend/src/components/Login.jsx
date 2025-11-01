@@ -1,16 +1,14 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { loginUser } from "../services/api";
-import { Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
+import { loginUser } from "../services/api"; // backend API call
 
-
-
-function Login() {
+export default function Login() {
   const navigate = useNavigate();
   const [form, setForm] = useState({ email: "", password: "" });
   const [loading, setLoading] = useState(false);
 
-  const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
+  const handleChange = (e) =>
+    setForm({ ...form, [e.target.name]: e.target.value });
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -18,16 +16,25 @@ function Login() {
     try {
       const res = await loginUser(form);
       const data = res.data;
+
       if (data.token) localStorage.setItem("token", data.token);
       if (data.role) {
         localStorage.setItem("userRole", data.role);
         localStorage.setItem("userName", data.name || "");
       }
 
-      if (data.role === "ADMIN" || data.role === "ROLE_ADMIN") navigate("/admindashboard");
-      else navigate("/userdashboard");
+      if (data.role === "ADMIN" || data.role === "ROLE_ADMIN") {
+        alert("Welcome Admin!");
+        navigate("/admindashboard");
+      } else {
+        alert("Login successful!");
+        navigate("/userdashboard");
+      }
     } catch (err) {
-      alert("Login failed. Please check your credentials.");
+      const message =
+        err.response?.data?.message ||
+        "Login failed. Please check your credentials.";
+      alert(message);
     } finally {
       setLoading(false);
     }
@@ -38,55 +45,106 @@ function Login() {
   };
 
   return (
-    <div
-      className="auth-page d-flex flex-column align-items-center justify-content-center"
-      style={{ minHeight: "100vh" }}
-    >
+    <div className="page-contacts">
+      <div className="page-wrapper">
+        <main className="page-main">
+          {/* 🔹 Background Hero */}
+          <div className="section-hero">
+            <div
+              className="section-hero__bg"
+              style={{
+                backgroundImage: "url(/src/assets/img/bg/contacts.jpg)",
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+              }}
+            >
+              <div className="uk-container">
+                <div className="section-hero__content">
+                  <div className="section-hero__title">
+                    <span>
+                      Your journey to power, style, and speed begins here.
+                    </span>
+                    <div className="uk-h1">Login</div>
+                  </div>
+                  <div className="section-hero__breadcrumb">
+                    <ul className="uk-breadcrumb">
+                      <li><a href="/">Home</a></li>
+                      <li><span>Login</span></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
 
-      {/* Centered form card */}
-      <div
-        className="auth-form bg-white shadow-sm p-4 rounded"
-        style={{ width: "100%", maxWidth: "400px" }}
-        title="Login to your MotoWorld account"
-      >
-        {/* Left-aligned Login title */}
-        <h3 className="card-title text-start mb-3">Login</h3>
+          {/* 🔹 Login Form */}
+          <div className="page-content uk-flex uk-flex-center uk-padding-large">
+            <div
+              className="uk-card uk-card-default uk-card-body uk-width-1-2@m uk-width-1-1@s uk-border-rounded"
+              style={{
+                maxWidth: "450px",
+                boxShadow: "0 4px 10px rgba(0,0,0,0.1)",
+              }}
+            >
+              <div className="uk-text-center uk-margin-bottom">
+               
+                <h3 className="uk-margin-small-top">Login to MotoWorld</h3>
+              </div>
 
-        <form onSubmit={handleLogin}>
-          <input
-            name="email"
-            value={form.email}
-            onChange={handleChange}
-            type="email"
-            placeholder="Email"
-            className="form-control mb-2"
-            required
-          />
-          <input
-            name="password"
-            value={form.password}
-            onChange={handleChange}
-            type="password"
-            placeholder="Password"
-            className="form-control mb-3"
-            required
-          />
-          <button type="submit" className="btn btn-primary w-100 mb-2" disabled={loading}>
-            {loading ? "Logging in..." : "Login"}
-          </button>
-        </form>
+              <form onSubmit={handleLogin}>
+                <div className="uk-margin">
+                  <input
+                    className="uk-input uk-form-large"
+                    type="email"
+                    name="email"
+                    placeholder="Email"
+                    value={form.email}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+                <div className="uk-margin">
+                  <input
+                    className="uk-input uk-form-large"
+                    type="password"
+                    name="password"
+                    placeholder="Password"
+                    value={form.password}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+                <div className="uk-margin-medium-top uk-text-center">
+                  <button
+                    className="uk-button uk-button-danger uk-button-large uk-width-1-1"
+                    type="submit"
+                    disabled={loading}
+                  >
+                    {loading ? "Logging in..." : "Login"}
+                  </button>
+                </div>
+               
+              </form>
 
-        <button type="button" className="btn btn-google w-100 mb-2" onClick={googleLogin}>
-          Continue with Google
-        </button>
-
-<p className="text-center small mb-0">
-  Don’t have an account? <Link to="/register">Register</Link>
-</p>
-
+              <div className="uk-margin-top uk-text-center">
+                <p>
+                  Don’t have an account?{" "}
+                  <Link
+                    to="/register"
+                    style={{
+                      color: "#d32f2f",
+                      textDecoration: "none",
+                      fontWeight: "500",
+                    }}
+                  >
+                    Create Account
+                  </Link>
+                </p>
+              </div>
+            </div>
+          </div>
+        </main>
       </div>
     </div>
   );
 }
-
-export default Login;
