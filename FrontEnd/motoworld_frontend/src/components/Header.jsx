@@ -63,12 +63,12 @@ export default function Header() {
 
         {/* ===== Right Section ===== */}
         <div className="page-header__right">
-          {/* <a
+          <a
             className="uk-navbar-toggle search-btn"
             href="#modal-search"
             data-uk-search-icon
             data-uk-toggle
-          ></a> */}
+          ></a>
           <a className="uk-navbar-toggle cart-btn" href="#!">
             <div className="cart-btn__icon uk-icon" data-uk-icon="cart">
               <span className="cart-btn__count">2</span>
