@@ -28,7 +28,7 @@ export default function Login() {
         navigate("/admindashboard");
       } else {
         alert("Login successful!");
-        navigate("/userdashboard");
+        navigate("/bikes");
       }
     } catch (err) {
       const message =

@@ -52,7 +52,9 @@ public class AuthController {
             return ResponseEntity.status(401).body(new ApiResponse("Invalid email or password"));
         }
 
+        System.out.println("user details " + user.getEmail() + " name : " + user.getName() + " password : " + user.getPassword() + " role : " + user.getRole());
         String token = jwtService.generateToken(user.getEmail());
-        return ResponseEntity.ok(new ApiResponse("Login successful", token));
+        String role = user.getRole();
+        return ResponseEntity.ok(new ApiResponse("Login successful", token, role));
     }
 }
